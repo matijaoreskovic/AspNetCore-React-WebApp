@@ -5,15 +5,13 @@ pipeline {
       steps {
         script {
         checkout scm
-        sh "git rev-parse --short HEAD > .git/commit-id"                        
-        def commit_id = readFile('.git/commit-id').trim()
         }
       }
     }
     stage('docker build/push') {
       steps {
         script {
-        def app = docker.build "moreskovic/demo-asp:${commit_id}"
+        def app = docker.build("moreskovic/demo-asp:${env.BUILD_ID}")
         docker.withRegistry('https://index.docker.io/v2/', 'DockerHub') {
           app.push()
         }
