@@ -1,5 +1,5 @@
 pipeline {
-  agent { dockerfile true }
+  agent any
    stages {
     stage('Preparation') {
       steps {
@@ -10,6 +10,7 @@ pipeline {
       steps {
           echo 'Starting to build docker image'
         script {
+            checkout scm
             def app = docker.build("moreskovic/demo-asp:${env.BUILD_ID}")
             docker.withRegistry('https://index.docker.io/v2/', 'DockerHub') {
             app.push()
