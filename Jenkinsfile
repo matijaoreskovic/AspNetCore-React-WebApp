@@ -3,9 +3,7 @@ pipeline {
    stages {
     stage('Preparation') {
       steps {
-        script {
         checkout scm
-        }
       }
     }
     stage('docker build/push') {
