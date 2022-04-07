@@ -3,15 +3,16 @@ pipeline {
    stages {
     stage('Preparation') {
       steps {
-        checkout scm
+          echo 'Priprema....'
       }
     }
     stage('docker build/push') {
       steps {
+          echo 'Starting to build docker image'
         script {
-        def app = docker.build("moreskovic/demo-asp:${env.BUILD_ID}")
-        docker.withRegistry('https://index.docker.io/v2/', 'DockerHub') {
-          app.push()
+            def app = docker.build("moreskovic/demo-asp:${env.BUILD_ID}")
+            docker.withRegistry('https://index.docker.io/v2/', 'DockerHub') {
+            app.push()
         }
       }
       }
